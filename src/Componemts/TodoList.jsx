@@ -1,9 +1,11 @@
 
-import { Button, Stack, Box, Card } from '@mui/material';
+import { Button, Stack, Box, Card, Typography, CardContent, CardHeader, Avatar, IconButton, CardMedia, Switch } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import { red } from '@mui/material/colors';
+
 
 
 export default function TodoList() {
@@ -15,10 +17,11 @@ export default function TodoList() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
     return (
         <Stack direction={'row'} margin={3} spacing={5}>
-            <Box sx={{ widows: "256px", backgroundColor: " #FFF", color: 'white' }}>
+            <Box sx={{ width: "256px", backgroundColor: " #FFF", color: 'white' }}>
                 <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
@@ -42,9 +45,95 @@ export default function TodoList() {
 
                 </Menu>
             </Box>
-            <Box sx={{ backgroundColor: "#EEE", }}>
-                shgasa
-            </Box>
+            <Stack height={'100vh'} padding={5} sx={{ backgroundColor: "#EEE", }} direction={'row'} spacing={2}>
+                <Box>
+                    <Card
+                        sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="recipe">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={2}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Box>
+                <Box>
+                    <Card
+                        sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="recipe">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={2}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout .
+                        </Typography>
+
+
+                    </Card>
+
+                </Box>
+                <Box  >
+                    <Card
+                        sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="recipe">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={2}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Box>
+            </Stack>
 
         </Stack>
     );

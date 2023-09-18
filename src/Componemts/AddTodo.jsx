@@ -48,7 +48,7 @@ export const AddTodo = () => {
                             />
                             <TextField
                                 error={errors.date}
-                                helperText={errors.date && "Date field is required"}
+                                helperText={errors.date && "Date is required"}
                                 {...register("date", { required: true })}
                                 type="date"
                                 fullWidth />
