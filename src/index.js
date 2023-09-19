@@ -5,7 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
-  RouterProvider,
+  RouterProvider
+  , Navigate
 } from "react-router-dom";
 import { AddTodo } from './Componemts/AddTodo';
 import TodoList from './Componemts/TodoList';
@@ -17,11 +18,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <TodoList />
+      },
+      {
+        path: '/addTodo',
         element: <AddTodo />
       },
       {
-        path: '/todoList',
-        element: <TodoList />
+        path: '/*',
+        element: <Navigate to="/" />
       },
     ]
   },

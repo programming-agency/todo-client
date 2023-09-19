@@ -1,15 +1,47 @@
 import { Stack, Box, Paper, Typography, TextField, Button, Autocomplete } from "@mui/material"
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+// import { appAxios } from "../Axios";
+// import { useNavigate } from "react-router-dom";
+
 
 
 const skills = ['html', 'css', 'javaScript', 'typescript', 'react']
 
 export const AddTodo = () => {
+
+    // const navigate = useNavigate();
+
+
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [value, setValue] = useState()
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+
+        // const result = await appAxios.post("/todo/create", data)
+        // console.log("result", result);
+
+        fetch('https://todo-server-programming-agency.vercel.app/todo/create', {
+            method: "POST",
+            headers: {
+                "Content-Type": "Application/json"
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+
+        console.log(data);
+
+
+        
+
+    }
+
+    
+
+
+
 
     return (
         <Paper sx={{
@@ -20,18 +52,18 @@ export const AddTodo = () => {
                 md: '30px',
                 xs: '20px'
             },
-             paddingX: {
+            paddingX: {
                 lg: '100px'
             },
-            
+
         }} >
 
-            <Box sx={{               
+            <Box sx={{
                 height: "550px",
                 backgroundColor: "white",
                 paddingX: {
                     lg: '20px',
-                    xs:'2px'
+                    xs: '2px'
 
                 },
                 paddingY: {
@@ -42,7 +74,7 @@ export const AddTodo = () => {
                     lg: '20px',
                     xs: '10px'
                 },
-               
+
             }}>
 
                 <Typography paddingY={"20px"} variant="h4" > New Todo</Typography>
@@ -68,12 +100,13 @@ export const AddTodo = () => {
                             <Autocomplete
                                 fullWidth
                                 options={skills}
-                                {...register("status")}
+
                                 type='text'
                                 renderInput={(params) =>
-                                    <TextField {...params} label="Status" />}
+                                    <TextField {...params} label="Status" {...register("status")} />}
                                 value={value}
                                 onChange={(newValue) => setValue(newValue)}
+
                             />
                             <TextField
                                 error={errors.date}
@@ -83,6 +116,7 @@ export const AddTodo = () => {
                                 fullWidth />
                         </Stack>
                         <Button variant="contained" type="submit">Submit</Button>
+
                     </Stack>
                 </form>
             </Box>

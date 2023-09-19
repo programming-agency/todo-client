@@ -1,75 +1,73 @@
 
-import { Button, Stack, Box, Card, Typography, CardContent, CardHeader, Avatar, IconButton, CardMedia, Switch } from '@mui/material';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Button, Stack, Box, Card, Typography, CardContent, CardHeader, Avatar, IconButton, CardMedia, Switch, Grid, List, ListSubheader, ListItemButton, ListItemIcon, ListItemText, Collapse, Link } from '@mui/material';
 import { useState } from 'react';
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { red } from '@mui/material/colors';
+import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+import GridViewIcon from '@mui/icons-material/GridView';
 
 
 
 export default function TodoList() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
+
+    fetch(`https://todo-server-programming-agency.vercel.app/todo/todos`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+        })
+
+    const [open, setOpen] = useState(true);
+
+    const handleClick = () => {
+        setOpen(!open);
     };
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
     return (
-        <Stack
-            direction={'row'}
-            margin={3}
-            spacing={5}>
+        <Stack direction={'row'} spacing={1}>
+            <List
+                sx={{ width: '100%', maxWidth: 256, bgcolor: 'background.paper' }}
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+                subheader={
+                    <ListSubheader component="div" id="nested-list-subheader">
+                        Logo here
+                    </ListSubheader>
+                }
+            >
+                <ListItemButton onClick={handleClick}>
+                    <ListItemIcon>
+                        <GridViewIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Dashboard" />
+                    {open ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <List sx component="div" disablePadding>
+                        <ListItemButton sx={{ pl: 4 }}>
+                            <ListItemText primary="My todos" />
+                        </ListItemButton>
+                        {/* Add todo */}
 
-            {/* <Box sx={{
-                width: "256px"
-                , backgroundColor: " #FFF",
-                color: 'white'
-            }}>
-                <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                    endIcon={<KeyboardArrowDownIcon />}
-                >
-                    Dashboard
-                </Button>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
-                >
-                    <MenuItem onClick={handleClose}>My Todo</MenuItem>
+                        <ListItemButton sx={{ pl: 4 }}>
 
-                </Menu>
-            </Box> */}
+                            <Link underline="none" href="/addTodo"><ListItemText primary="Add Todo" /></Link>
+                        </ListItemButton>
 
-            <Stack
-                sx={{
-                    display: 'grid'
-                    , gridTemplateColumns: 'repeat(3, 1fr)'
-                    , backgroundColor: "#EEE",
-                }}
-                height={'100vh'} padding={5}
-                direction={'row'}
-                spacing={2}>
-                <Box >
-                    <Card
-                        sx={{ maxWidth: 500 }}>
+                    </List>
+                </Collapse>
+            </List>
+
+            {/* card  */}
+
+
+            <Grid sx={{ backgroundColor: "#EEE" }}
+                container spacing={3}>
+                <Grid item xs   >
+                    <Card sx={{ maxWidth: 500 }}>
                         <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: red[500] }}
-                                    aria-label="recipe">
+                                    aria-label="Avatar">
                                     NH
                                 </Avatar>
                             }
@@ -91,43 +89,14 @@ export default function TodoList() {
 
                     </Card>
 
-                </Box>
-                <Box>
-                    <Card
-                        sx={{ maxWidth: 500 }}>
+                </Grid>
+
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
                         <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: red[500] }}
-                                    aria-label="recipe">
-                                    NH
-                                </Avatar>
-                            }
-
-                            action={
-                                <IconButton aria-label="settings">
-                                    <Switch {...label}
-                                        defaultChecked />
-                                </IconButton>
-                            }
-                            title="Label"
-                        />
-                        <Typography padding={2}
-                            variant="body2"
-                            color="text.secondary">
-                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout .
-                        </Typography>
-
-
-                    </Card>
-
-                </Box>
-                <Box  >
-                    <Card
-                        sx={{ maxWidth: 500 }}>
-                        <CardHeader
-                            avatar={
-                                <Avatar sx={{ bgcolor: red[500] }}
-                                    aria-label="recipe">
+                                    aria-label="Avatar">
                                     NH
                                 </Avatar>
                             }
@@ -149,8 +118,262 @@ export default function TodoList() {
 
                     </Card>
 
-                </Box>
-            </Stack>
+                </Grid>
+
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+                <Grid item xs  >
+                    <Card sx={{ maxWidth: 500 }}>
+                        <CardHeader
+                            avatar={
+                                <Avatar sx={{ bgcolor: red[500] }}
+                                    aria-label="Avatar">
+                                    NH
+                                </Avatar>
+                            }
+
+                            action={
+                                <IconButton aria-label="settings">
+                                    <Switch {...label}
+                                        defaultChecked />
+                                </IconButton>
+                            }
+                            title="Label"
+                        />
+                        <Typography padding={1}
+                            variant="body2"
+                            color="text.secondary">
+                            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                        </Typography>
+
+
+                    </Card>
+
+                </Grid>
+
+            </Grid>
 
         </Stack>
     );
