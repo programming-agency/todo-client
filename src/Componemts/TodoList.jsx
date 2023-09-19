@@ -20,8 +20,16 @@ export default function TodoList() {
     const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
     return (
-        <Stack direction={'row'} margin={3} spacing={5}>
-            <Box sx={{ width: "256px", backgroundColor: " #FFF", color: 'white' }}>
+        <Stack
+            direction={'row'}
+            margin={3}
+            spacing={5}>
+
+            {/* <Box sx={{
+                width: "256px"
+                , backgroundColor: " #FFF",
+                color: 'white'
+            }}>
                 <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
@@ -44,9 +52,18 @@ export default function TodoList() {
                     <MenuItem onClick={handleClose}>My Todo</MenuItem>
 
                 </Menu>
-            </Box>
-            <Stack height={'100vh'} padding={5} sx={{ backgroundColor: "#EEE", }} direction={'row'} spacing={2}>
-                <Box>
+            </Box> */}
+
+            <Stack
+                sx={{
+                    display: 'grid'
+                    , gridTemplateColumns: 'repeat(3, 1fr)'
+                    , backgroundColor: "#EEE",
+                }}
+                height={'100vh'} padding={5}
+                direction={'row'}
+                spacing={2}>
+                <Box >
                     <Card
                         sx={{ maxWidth: 500 }}>
                         <CardHeader

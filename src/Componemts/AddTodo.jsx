@@ -12,14 +12,43 @@ export const AddTodo = () => {
     const onSubmit = data => console.log(data);
 
     return (
-        <Paper sx={{ color: "primary", backgroundColor: "#EEE", paddingY: "100px", paddingX: "200px" }} >
+        <Paper sx={{
+            color: "primary",
+            backgroundColor: "#EEE",
+            paddingY: {
+                lg: '50px',
+                md: '30px',
+                xs: '20px'
+            },
+             paddingX: {
+                lg: '100px'
+            },
+            
+        }} >
 
-            <Box sx={{ padding: '20px', width: '100%', height: "550px", backgroundColor: "white", }}>
+            <Box sx={{               
+                height: "550px",
+                backgroundColor: "white",
+                paddingX: {
+                    lg: '20px',
+                    xs:'2px'
 
-                <Typography variant="h4" > New Todo</Typography>
+                },
+                paddingY: {
+                    lg: '20px',
+
+                },
+                marginX: {
+                    lg: '20px',
+                    xs: '10px'
+                },
+               
+            }}>
+
+                <Typography paddingY={"20px"} variant="h4" > New Todo</Typography>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Stack sx={{ marginTop: '20px' }} spacing={5}  >
+                    <Stack spacing={5}  >
                         <TextField
                             error={errors.label}
                             helperText={errors.label && "please type your label must be min:6 - max:20 character"}
@@ -35,7 +64,7 @@ export const AddTodo = () => {
                             label='Message'
                             type="text" />
 
-                        <Stack direction={"row"} spacing={2} display='flex' alignItems='center'>
+                        <Stack direction={"row"} spacing={1} display='flex' alignItems='center'>
                             <Autocomplete
                                 fullWidth
                                 options={skills}
