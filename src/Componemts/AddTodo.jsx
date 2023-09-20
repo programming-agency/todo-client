@@ -1,47 +1,25 @@
-import { Stack, Box, Paper, Typography, TextField, Button, Autocomplete } from "@mui/material"
+import { Stack, Box, Paper, Typography, TextField, Button, Autocomplete, FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-// import { appAxios } from "../Axios";
-// import { useNavigate } from "react-router-dom";
-
-
-
-const skills = ['html', 'css', 'javaScript', 'typescript', 'react']
+import { appAxios } from "../Axios";
 
 export const AddTodo = () => {
+    const [value, setValue] = useState('')
 
-    // const navigate = useNavigate();
-
-
+    // validation react hook form
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [value, setValue] = useState()
 
-    const onSubmit = data => {
-
-        // const result = await appAxios.post("/todo/create", data)
-        // console.log("result", result);
-
-        fetch('https://todo-server-programming-agency.vercel.app/todo/create', {
-            method: "POST",
-            headers: {
-                "Content-Type": "Application/json"
-            },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then(data => console.log(data))
-
-        console.log(data);
-
-
-        
-
+    // post data mongo db
+    const onSubmit = async data => {
+        const result = await appAxios.post("/todo/create", data)
+        console.log(result);
+        // console.log(data);
     }
 
-    
-
-
-
+    // handle status
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
 
     return (
         <Paper sx={{
@@ -68,7 +46,6 @@ export const AddTodo = () => {
                 },
                 paddingY: {
                     lg: '20px',
-
                 },
                 marginX: {
                     lg: '20px',
@@ -76,38 +53,65 @@ export const AddTodo = () => {
                 },
 
             }}>
-
-                <Typography paddingY={"20px"} variant="h4" > New Todo</Typography>
+                <Typography
+                    paddingY={"20px"}
+                    variant="h4"
+                >
+                    New Tod
+                </Typography>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack spacing={5}  >
                         <TextField
                             error={errors.label}
-                            helperText={errors.label && "please type your label must be min:6 - max:20 character"}
+                            helperText={errors.label && "please enter your label be at minimum 6 characters maximum length 20 characters"}
                             fullWidth
-                            {...register("label", { required: true, minLength: 6, maxLength: 20 })}
+                            {...register("label",
+                                {
+                                    required: true,
+                                    minLength: 6,
+                                    maxLength: 20
+                                })}
                             label='Label' />
 
                         <TextField
+                            multiline
+                            rows={3}
                             error={errors.message}
-                            helperText={errors.message && "your message must be min:6 - max:250 character"}
+                            helperText={errors.message && "please enter your label be at minimum 6 characters maximum length 250 characters"}
                             {...register("message",
-                                { required: true, maxLength: 250, minLength: 6 })}
+                                {
+                                    required: true,
+                                    maxLength: 250,
+                                    minLength: 6
+                                })}
                             label='Message'
                             type="text" />
 
-                        <Stack direction={"row"} spacing={1} display='flex' alignItems='center'>
-                            <Autocomplete
-                                fullWidth
-                                options={skills}
+                        <Stack
+                            direction={"row"}
+                            spacing={1}
+                            display='flex'
+                            alignItems='center'>
 
-                                type='text'
-                                renderInput={(params) =>
-                                    <TextField {...params} label="Status" {...register("status")} />}
-                                value={value}
-                                onChange={(newValue) => setValue(newValue)}
+                            <FormControl fullWidth>
+                                <InputLabel
+                                    id="demo-simple-select-label">Status</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={value}
+                                    error={errors.status}
+                                    helperText={errors.status && "status is required"}
+                                    label="status"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value={'COMPLETED'}>COMPLETED</MenuItem>
+                                    <MenuItem value={"PENDING"}>PENDING</MenuItem>
+                                    <MenuItem value={"UPCOMING"}>UPCOMING</MenuItem>
+                                </Select>
+                            </FormControl>
 
-                            />
                             <TextField
                                 error={errors.date}
                                 helperText={errors.date && "Date is required"}
