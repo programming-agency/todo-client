@@ -1,22 +1,20 @@
 
-import { Button, Stack, Box, Item, Card, Typography, CardContent, CardHeader, Avatar, IconButton, CardMedia, Switch, Grid, List, ListSubheader, ListItemButton, ListItemIcon, ListItemText, Collapse, Link } from '@mui/material';
+import { Stack, Card, Typography, CardHeader, Avatar, IconButton, Grid, List, ListSubheader, ListItemButton, ListItemIcon, ListItemText, Collapse, Link } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { red } from '@mui/material/colors';
-import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { appAxios } from '../Axios';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 export default function TodoList() {
 
     const [todos, setTodos] = useState([])
 
     useEffect(() => {
-
         const getAllTodo = async () => {
-
             const todos = await appAxios.get("/todo/todos")
             setTodos(todos.data);
         }
@@ -24,12 +22,11 @@ export default function TodoList() {
         getAllTodo();
     }, [])
 
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const handleClick = () => {
         setOpen(!open);
     };
-
 
     return (
         <Stack direction={'row'} spacing={1}>
@@ -55,56 +52,49 @@ export default function TodoList() {
                         <ListItemButton sx={{ pl: 4 }}>
                             <ListItemText primary="My todos" />
                         </ListItemButton>
+
                         {/* Add todo */}
-
                         <ListItemButton sx={{ pl: 4 }}>
-
                             <Link underline="none" href="/addTodo"><ListItemText primary="Add Todo" /></Link>
                         </ListItemButton>
-
                     </List>
                 </Collapse>
             </List>
-
-            {/* card  */}            
-
-            <Grid container sx={{ backgroundColor: "#EEE" }}
+            {/* card  */}
+            <Grid
+                container
+                sx={{ backgroundColor: "#EEE" }}
                 spacing={3}>
-
-
                 {
                     todos.map((todo, index) => (
-
-
-                        <Grid item xs={1} md={3} xl={4}   >
-                            <Card sx={{ maxWidth: 500 }}>
+                        <Grid item
+                            xs={1}
+                            md={3}
+                            xl={4} >
+                            <Card
+                                sx={{ maxWidth: 500 }}>
                                 <CardHeader
                                     avatar={
-                                        <Avatar sx={{ bgcolor: red[500] }}
+                                        <Avatar
+                                            sx={{ bgcolor: red[500] }}
                                             aria-label="Avatar">
-                                            NH
                                         </Avatar>
                                     }
-
                                     action={
                                         <IconButton aria-label="settings">
-                                            <Switch {...label}
-                                                defaultChecked />
-                                        </IconButton>
-                                    }
-                                    title="Label"
-                                />
-                                <Typography padding={2}
+                                            <MoreVertIcon />
+                                        </IconButton>}
+                                    title="Label" />
+
+                                <Typography
+                                    padding={2}
                                     variant="body2"
                                     color="text.secondary">
-                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                                    {todo.message}
                                 </Typography>
                             </Card>
                         </Grid>
-                    ))
-
-                }
-
+                    ))}
             </Grid>
         </Stack>
     );
